@@ -1,0 +1,59 @@
+<div id="list_wrap" [ngClass]="{'active':curent_message}">
+    <div class="message_list" *ngFor="let message of messages | messagesFilter:[sort,selfId] ">
+        <div class="list_item inbox " (click)="showCurrent($event, message)" [ngClass]="{'message_new':(!message.ReadDate && selfId == message.ReceiverId), 'active':message.Id == selectedMessage.Id}">
+            <div class="name_holder">
+                <p *ngIf="message.SenderId == selfId">
+                    <span>To: </span>{{message.ReceiverFirstName + ' ' + message.ReceiverLastName}}
+                </p>
+                <p *ngIf="message.SenderId != selfId">
+                    <span>From: </span>{{message.SenderFirstName + ' ' + message.SenderLastName}}
+                </p>
+            </div>
+            <div class="subject_holder">{{message.Subject}}</div>
+            <i class="fa fa-reply" aria-hidden="true"></i>
+            <div class="date_holder">
+                <time>{{message.SentDate | customShortDateTime}}</time>
+            </div>
+            <div id="delete-message-button" class="delete_message" aria-hidden="true" (click)="setMessageForDelete($event,message.Id,modal)">
+                &#215;
+            </div>
+        </div>
+    </div>
+</div>
+
+<button data-toggle="modal" class="openModal" data-target="#removeMessage" style="display:none"></button>
+
+<div id="current_message" [ngClass]="{'active':curent_message}" *ngIf="curent_message">
+    <div class="cur_title">
+        <h4 *ngIf="selectedMessage.SenderId != selfId">To: {{selectedMessage.SenderFirstName + ' ' + selectedMessage.SenderLastName}}</h4>
+        <h4 *ngIf="selectedMessage.SenderId == selfId">From: {{selectedMessage.SenderFirstName + ' ' + selectedMessage.SenderLastName}}</h4>
+        <time>{{selectedMessage.SentDate | customShortDateTime}}</time>
+    </div>
+    <div class="cur_text">{{selectedMessage.Text}}</div>
+    <form [formGroup]="messageForm" #message="ngForm" novalidate name="message" class="addschool-form" (ngSubmit)="reply($event,message.value, message.valid)">
+        <input formControlName="ReceiverId" type="text" hidden name="ReceiverId" [(ngModel)]="newMessage.ReceiverId" required="true">
+        <div class="reply_text">
+            <input formControlName="Subject" type="text" id="Subject" placeholder="Subject:" [(ngModel)]="newMessage.Subject" name="Subject" required="true">    
+            <div class="reply_textarea_wrap">
+                <textarea formControlName="Text" type="text" id="send_message_text" placeholder="Type your message" name="Text" [(ngModel)]="newMessage.Text" required></textarea>
+                <button type="submit" class="btn btn-default reply_button" [disabled]="messageForm.invalid && canSend">Send</button>
+            </div>
+            <i *ngIf="!canSend" class="fa fa-spinner fa-spin fa-fw"></i>
+        </div>
+    </form>
+    <span class="m_sign" (click)="hideCurrent()">&#215;</span>
+</div>
+
+<div class="modal fade" id="removeMessage" #modal role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div id="confirmation-block" class="modal-footer">
+            <h4 class="modal-title tAc">Are you sure you want to remove this message?</h4>
+            <a data-dismiss="modal" type="button" type="submit" (click)="delete()">Remove</a>
+            <a data-dismiss="modal" type="button" type="submit">Cancel</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+<notifications></notifications>

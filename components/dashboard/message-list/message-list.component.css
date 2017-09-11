@@ -1,0 +1,199 @@
+#list_wrap {
+  width: 100%;
+  transition: all 0.4s ease;
+  height: 520px;
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 0 0 0 10px;
+}
+#list_wrap.active {width: 50%}
+
+.list_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #d7d7d7;
+  padding: 25px 20px 25px 10px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+.list_item:hover, .list_item.active {
+  box-shadow: -5px 0 #ff6868;
+  background: #f4f4f4;
+}
+.list_item:hover .fa-reply, .list_item.active .fa-reply {
+  opacity: 1;
+}
+
+.message_new {
+  background: #f4f4f4;
+  font-weight: 700;
+}
+
+.name_holder {
+  font-size: 16px;
+  width: 200px;
+  max-width: 40%;
+  padding-right: 20px;
+}
+.name_holder p {
+  color: #2b3544;
+  margin-bottom: 0;
+}
+.subject_holder {
+  font-size: 14px;
+  flex: 1;
+  padding-right: 3%;
+  color: #2b3544;
+}
+.date_holder {
+  margin-left: auto;
+}
+time {
+  font-size: 12px;
+  color: #666;
+}
+.fa-reply {
+  color: #2b3544;
+  margin-left: auto;
+  padding: 0 15px;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+#current_message {
+  width: 0;
+  border-left: 1px solid #d7d7d7;
+  transition: all 0.4s ease;
+  opacity: 0;
+  position: relative;
+}
+#current_message.active {
+  width: 50%;
+  opacity: 1;
+}
+
+.cur_title {
+  border-bottom: 1px solid #d7d7d7;
+  padding: 15px 20px;
+}
+.cur_text {
+  padding: 15px 20px;
+  margin-bottom: 60px;
+}
+
+.reply_text input, .reply_text textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid #d7d7d7;
+  border-left: none;
+  height: 34px;
+  padding: 0 10px;
+}
+.reply_text textarea {
+  height: 100px;
+  resize: none;
+  border-top: none;
+  padding: 10px 100px 10px 10px;
+}
+.reply_textarea_wrap {position: relative}
+.reply_button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 30px;
+}
+.reply_text .fa-spinner {
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.m_sign {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  width: 26px;
+  font-size: 22px;
+  line-height: 23px;
+  font-weight: 700;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  color: #000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+
+#current_message.active .m_sign {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media screen and (max-width: 1366px) {
+  .name_holder {font-size: 14px}
+  .subject_holder {font-size: 13px}
+  time {font-size: 11px}
+  .fa-reply {padding: 0 10px}
+}
+
+@media screen and (max-width: 960px) {
+  #list_wrap.active {
+    width: 0;
+    opacity: 0;
+  }
+  #current_message.active {width: 100%}
+
+  .cur_title h4 {
+    font-size: 16px;
+    padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .list_item {
+    display: block;
+    padding: 15px 10px;
+    text-align: right;
+  }
+
+  .delete_message {
+      text-align: right;
+  }
+
+  .name_holder {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  .subject_holder {
+    padding-right: 0;
+    text-align: left;
+  }
+
+  .cur_title {padding: 10px 15px}
+  .cur_title h4 {font-size: 15px}
+  .cur_title time {
+    min-width: 60px;
+    text-align: right;
+  }
+
+  .cur_text {padding: 15px}
+
+  .reply_text textarea {padding: 10px 80px 10px 10px}
+  .reply_button {right: 10px}
+}
+
+  .delete_message {
+      padding: 0 12px;
+      display: flex;
+      font-size: 22px;    
+      font-weight: bold;
+      cursor:pointer;
+  }
+  
+
